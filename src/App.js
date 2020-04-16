@@ -6,6 +6,8 @@ const App = ({store}) => (
       <Provider store={store}>
           <Router>
               <Route path="/" component={}/>
+              <Route path="/game-settings" component={}/>
+              <Route path="/winners" component={}/>
           </Router>
       </Provider>
   );
