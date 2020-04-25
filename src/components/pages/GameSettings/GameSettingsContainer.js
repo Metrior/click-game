@@ -2,19 +2,21 @@ import React from 'react';
 import {connect} from 'react-redux'
 
 import GameSettings from "./GameSettings";
-import {setSettings, setPlayerName, runGame} from "../../../redux/actions";
+import {setSettings, setNewName, runGame} from "../../../redux/actions";
 
 const mapStateToProps = state => {
     return {
         mode: state.settings.mode,
         name: state.settings.name,
+        gameActive: state.game.gameActive,
+        winner: state.game.winner,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         setSettings: (mode) => dispatch(setSettings(mode)),
-        setPlayerName: (name) => dispatch(setPlayerName(name)),
+        setNewName: (name) => dispatch(setNewName(name)),
         runGame: () => dispatch(runGame()),
     };
 };

@@ -1,21 +1,36 @@
 import React, {useState} from 'react';
-import { connect } from 'react-redux';
 
-import {setSettings} from "../../../redux/actions"
-import {ModeInput, NameInput, Option, PlayButton} from "./GameSettings.styled";
+import {ModeInput, NameInput, Option, StartContainer, WinnerText, SettingsContainer} from "./GameSettings.styled";
 
-const GameSettings = ({mode, name, setPlayerName, setSettings, runGame}) => {
+import PlayButton from "../../common/PlayButton";
+
+const GameSettings = ({winner, mode, name, gameActive, setNewName, setSettings, runGame}) => {
+
+    const [playerName, setName] = useState('');
+
+    const onClickHandler = () => {
+        runGame()
+        setName('')
+    }
+
+    const onChangeHandler = (e) => {
+        setName(e.target.value)
+        setNewName(e.target.value)
+    }
 
     return (
         <>
-            <ModeInput defaultValue={mode} onChange={(e)=>setSettings(e.target.value)} >
-                <Option name='easy Mode'>easy Mode</Option>
-                <Option name='normal Mode'>normal Mode</Option>
-                <Option name='hard Mode'>hard Mode</Option>
-            </ModeInput>
+            <StartContainer>
+                <ModeInput disabled={gameActive} defaultValue={mode} onChange={(e)=>setSettings(e.target.value)} >
+                    <Option name='easy Mode'>easy Mode</Option>
+                    <Option name='normal Mode'>normal Mode</Option>
+                    <Option name='hard Mode'>hard Mode</Option>
+                </ModeInput>
 
-            <NameInput value={name} onChange={(e)=>setPlayerName(e.target.value)} />
-            <PlayButton disablled={name} onClick={()=>runGame()}>Play</PlayButton>
+                <NameInput value={playerName} maxLength="10" onChange={onChangeHandler} />
+                <PlayButton value={"Play"} disabled={name===''} onClick={onClickHandler}/>
+            </StartContainer>
+            <WinnerText>{winner ? `${name} wins!` : null}</WinnerText>
         </>
     );
 };

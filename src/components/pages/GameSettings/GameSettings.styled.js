@@ -1,9 +1,17 @@
 import styled from 'styled-components';
 
+const StartContainer = styled.div `
+    background-color: white;
+    width: 350px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+`;
+
 const ModeInput = styled.select `
     background-color: white;
     width: 100px;
-    height: 20px;
+    height: 30px;
 `;
 
 const Option = styled.option `
@@ -13,13 +21,12 @@ const Option = styled.option `
 const NameInput = styled.input `
     background-color: white;
     width: 100px;
-    height: 20px;
+    height: 22px;
 `;
 
-const PlayButton = styled.button `
-    background-color: white;
-    width: 100px;
-    height: 20px;
+const WinnerText = styled.div `
+    height: 40px;
+    margin: 0 auto;
 `;
 
-export {NameInput, ModeInput, Option, PlayButton}
+export {NameInput, ModeInput, Option, StartContainer, WinnerText}

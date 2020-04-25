@@ -1,20 +1,21 @@
 import React from 'react';
 
-import {GameBlock} from './GamePage.styled'
+import {GameContainer, GameBlock} from './GamePage.styled'
 
 import GameSettings from "../GameSettings"
 import Grid from "../../Grid"
-import WinnersBlock from "../WinnersPage";
+import WinnersBlock from "../WinnersBlock";
 
 const GamePage = () => {
     return (
-        <>
+        <GameContainer>
             <GameBlock>
                 <GameSettings/>
                 <Grid/>
             </GameBlock>
+
             <WinnersBlock/>
-        </>
+        </GameContainer>
     );
 };
 

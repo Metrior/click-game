@@ -21,7 +21,7 @@ const settings = (state = initialSettingsState, action) => {
         case SET_PLAYER_NAME:
             return {
                 ...state,
-                name: action.payload
+                name: action.name
             }
         default:
             return state

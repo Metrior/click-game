@@ -1,5 +1,3 @@
-import update from 'immutability-helper';
-
 import {
     CHANGE_COLOR_TO_GREEN,
     CHANGE_COLOR_TO_RED,
@@ -10,11 +8,11 @@ import {
     CREATE_GRID,
     PLAYER_SCORE,
     PLAYER_WINS,
-    START_GAME
+    START_GAME, CLEAR_WINNER
 } from "../actions";
 
 const initialSettingsState = {
-    runGame: false,
+    gameActive: false,
     elementId: null,
     chosenElements: [],
     array: null,
@@ -29,8 +27,9 @@ const game = (state = initialSettingsState, action) => {
         case START_GAME:
             return {
                 ...state,
-                runGame: true,
+                gameActive: true,
                 winner: null,
+                chosenElements: [],
                 playerScore: 0,
                 computerScore: 0
             };
@@ -38,6 +37,11 @@ const game = (state = initialSettingsState, action) => {
             return {
                 ...state,
                 array: action.array
+            }
+        case CLEAR_WINNER:
+            return {
+                ...state,
+                winner: null
             }
         case CHOOSE_RANDOM_ELEMENT:
             return {
@@ -79,15 +83,15 @@ const game = (state = initialSettingsState, action) => {
             return {
                 ...state,
                 winner: "player",
-                winnersList: [...state.winnersList, action.payload],
-                runGame: false,
+                winnersList: [...state.winnersList, action.winner],
+                gameActive: false,
                 array: state.array.map(() => "white")
             }
         case COMPUTER_WINS:
             return {
                 ...state,
                 winner: "computer",
-                runGame: false,
+                gameActive: false,
                 array: state.array.map(() => "white")
             }
         case NO_WINNER:

@@ -12,6 +12,7 @@ export const COMPUTER_SCORE = 'COMPUTER_SCORE';
 export const PLAYER_WINS = 'PLAYER_WINS';
 export const COMPUTER_WINS = 'COMPUTER_WINS';
 export const NO_WINNER = 'NO_WINNER';
+export const CLEAR_WINNER = 'CLEAR_WINNER';
 
 export const setSettings = (mode) => {
     return async (dispatch, getState) => {
@@ -21,10 +22,10 @@ export const setSettings = (mode) => {
     }
 };
 
-export const setPlayerName = (name) => {
+export const setName = (name) => {
     return {
         type: SET_PLAYER_NAME,
-        payload: name
+        name: name
     }
 };
 
@@ -141,9 +142,12 @@ export const calculateScore = (color) => {
 
 export const checkWinner = (playerScore, computerScore, array, name) => {
     if (playerScore>=(Math.ceil(array.length/2))){
+        let today = new Date();
+        let time = today.getHours() + ":" + (today.getMinutes()<10?'0':'') + today.getMinutes() + ":" + (today.getSeconds()<10?'0':'') + today.getSeconds();
+        let date = today.getFullYear()+'/' + (today.getMonth()<10?'0':'') + (today.getMonth()+1)+'/' + (today.getDate()<10?'0':'') + today.getDate();
         return {
             type: PLAYER_WINS,
-            payload: name
+            winner: {name: name, date: date, time: time}
         }
     } else if (computerScore>=(Math.ceil(array.length/2))){
         return {
@@ -153,3 +157,40 @@ export const checkWinner = (playerScore, computerScore, array, name) => {
         type: NO_WINNER
     }
 }
+
+export const loadState = () => {
+    try {
+        const winnersList = localStorage.getItem('winnersList');
+        if (winnersList === null) {
+            return undefined;
+        }
+        return {"game":{"winnersList":JSON.parse(winnersList)}}
+    } catch (err) {
+        return undefined;
+    }
+};
+
+export const saveState = (winners) => {
+    try {
+        const winnersList = JSON.stringify(winners);
+        localStorage.setItem('winnersList', winnersList);
+    } catch {
+        return null
+    }
+};
+
+export const clearWinner = () => {
+    return {
+        type: CLEAR_WINNER
+    }
+};
+
+export const setNewName = (name) => {
+    return async (dispatch, getState)=>{
+        const {winner} = getState().settings;
+        if (winner) {
+            await dispatch(clearWinner())
+        }
+        await dispatch(setName(name))
+    }
+};
