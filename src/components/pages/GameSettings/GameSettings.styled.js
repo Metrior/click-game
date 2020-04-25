@@ -27,6 +27,7 @@ const NameInput = styled.input `
 const WinnerText = styled.div `
     height: 40px;
     margin: 0 auto;
+    font-family: Sans-serif;
 `;
 
 export {NameInput, ModeInput, Option, StartContainer, WinnerText}
